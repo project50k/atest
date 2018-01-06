@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.atest.entity.Student;
 import pl.atest.entity.Teacher;
@@ -113,7 +112,7 @@ public class TeacherController {
 	public String deleteGet(@PathVariable long id, Model m) {
 		Teacher teacher = this.teacherRepo.findById(id);
 		m.addAttribute("teacher", teacher);
-		m.addAttribute("delTeach", id);
+		m.addAttribute("del", id);
 		return "teacher/list";
 	}
 	
@@ -124,15 +123,15 @@ public class TeacherController {
 	}
 	
 	// TEST -------------------------------------------------------------------------------------------------------- \
-	@GetMapping("/addTeacherToStudent/{tid}/{sid}")
-	@ResponseBody
-	public String addRoleToUser(@PathVariable long tid, @PathVariable long sid) {
-		Teacher t = this.teacherRepo.findById(tid);
-		Student s = this.studentRepo.findById(sid);
-		t.setStudent(s);
-		this.teacherRepo.save(t);
-		return "added";
-	}
+//	@GetMapping("/addTeacherToStudent/{tid}/{sid}")
+//	@ResponseBody
+//	public String addRoleToUser(@PathVariable long tid, @PathVariable long sid) {
+//		Teacher t = this.teacherRepo.findById(tid);
+//		Student s = this.studentRepo.findById(sid);
+//		t.setStudent(s);
+//		this.teacherRepo.save(t);
+//		return "added";
+//	}
 	
 //	@GetMapping("/addTeacherToStudent1") // => nie działa
 //	@ResponseBody
@@ -145,32 +144,32 @@ public class TeacherController {
 //		return "added";
 //	}
 	
-	@GetMapping("/addTeacherToStudent2")  // => Prawidłowe dodanie relacji @OneToOne; pobieramy dane i zapisujemy w child
-	@ResponseBody
-	public String addRoleToUser2() {
-		Teacher t = this.teacherRepo.findById(4l);
-		Student s = this.studentRepo.findById(4l);
-		t.setStudent(s);
-		//s.setTeacher(t);
-		this.teacherRepo.save(t);
-		return "added";
-	}
+//	@GetMapping("/addTeacherToStudent2")  // => Prawidłowe dodanie relacji @OneToOne; pobieramy dane i zapisujemy w child
+//	@ResponseBody
+//	public String addRoleToUser2() {
+//		Teacher t = this.teacherRepo.findById(4l);
+//		Student s = this.studentRepo.findById(4l);
+//		t.setStudent(s);
+//		//s.setTeacher(t);
+//		this.teacherRepo.save(t);
+//		return "added";
+//	}
 	
-	@GetMapping("{id}/listadd")
-	public String listadd(@PathVariable long id,Model m) {
-		Teacher tmpTeacher = this.teacherRepo.findById(id);
-		m.addAttribute("setTeacher", tmpTeacher);
-		return "teacher/listadd";
-	}
-	
-	@PostMapping("{id}/listadd")
-	@Transactional
-	public String listadd(@PathVariable long id, @ModelAttribute Teacher tmpTeacher) {	
-		Teacher teacher = this.teacherRepo.findById(id);
-		teacher.setStudent(tmpTeacher.getStudent());
-		this.teacherRepo.save(teacher);
-		return "redirect:/teacher/listconn";
-	}
+//	@GetMapping("{id}/listadd")
+//	public String listadd(@PathVariable long id,Model m) {
+//		Teacher tmpTeacher = this.teacherRepo.findById(id);
+//		m.addAttribute("setTeacher", tmpTeacher);
+//		return "teacher/listadd";
+//	}
+//	
+//	@PostMapping("{id}/listadd")
+//	@Transactional
+//	public String listadd(@PathVariable long id, @ModelAttribute Teacher tmpTeacher) {	
+//		Teacher teacher = this.teacherRepo.findById(id);
+//		teacher.setStudent(tmpTeacher.getStudent());
+//		this.teacherRepo.save(teacher);
+//		return "redirect:/teacher/listconn";
+//	}
 	
 
 	
@@ -187,17 +186,6 @@ public class TeacherController {
 	public List<Student> allStudents() {
 		return studentRepo.findAll();
 	}
-	
-	@ModelAttribute("availableTeachers")
-	public List<Teacher> availableTeachers() {
-		return teacherRepo.sqlFindByHasStudent();
-	}
-	
-	@ModelAttribute("availableStudents")
-	public List<Student> availableStudents() {
-		return studentRepo.sqlFindByHasTeacher(); 
-	}
-	
 	
 	
 }

@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,13 +35,14 @@ public class Student {
 	private String firstName;
 	@NotEmpty
 	private String lastName;
-	
-	@OneToOne (mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Teacher teacher;
-	@OneToOne (mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
-	
-	
+
+	@ManyToOne
+	@JoinColumn(name = "division_id")
+	private Division division;
+
 	public Student() {
 		super();
 	}
@@ -52,17 +55,14 @@ public class Student {
 		this.lastName = lastName;
 	}
 
-	public Student(String password, String email, String firstName, String lastName, Teacher teacher, User user) {
+	public Student(String password, String email, String firstName, String lastName, User user) {
 		super();
 		setPassword(password);
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.teacher = teacher;
 		this.user = user;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -108,14 +108,6 @@ public class Student {
 		this.lastName = lastName;
 	}
 
-	public Teacher getTeacher() {
-		return teacher;
-	}
-
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
-	}
-	
 	public User getUser() {
 		return user;
 	}
@@ -124,14 +116,18 @@ public class Student {
 		this.user = user;
 	}
 
+	public Division getDivision() {
+		return division;
+	}
+
+	public void setDivision(Division division) {
+		this.division = division;
+	}
+
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", password=" + password + ", email=" + email + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", teacher=" + teacher + ", user=" + user + "]";
+				+ ", lastName=" + lastName + ", teacher=" + ", user=" + user + "]";
 	}
 
-
-
-	
-	
 }

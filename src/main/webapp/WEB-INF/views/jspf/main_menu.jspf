@@ -18,8 +18,8 @@
           Groups
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="${pageContext.request.contextPath}/group/all">All Groups</a>
-          <a class="dropdown-item" href="${pageContext.request.contextPath}/group/add">Add Group</a>
+          <a class="dropdown-item" href="${pageContext.request.contextPath}/division/all">All Groups</a>
+          <a class="dropdown-item" href="${pageContext.request.contextPath}/division/add">Add Group</a>
         </div>
       </li>
       <li class="nav-item dropdown">

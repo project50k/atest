@@ -16,7 +16,7 @@
 	<%@ include file="../jspf/main_menu.jspf"%>
 
 	<div >
-	<h4>List of all students</h4>
+	<h4>List of all students in group ${divisionParams.name}</h4>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -24,41 +24,26 @@
 				<th scope="col">EMAIL</th>
 				<th scope="col">FIRST NAME</th>
 				<th scope="col">LAST NAME</th>
-				<th scope="col">OPTION</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${allStudents}" var="student">
+			<c:forEach items="${allStudentsInGroup}" var="student">
 				<tr>
 					<td scope="row"><c:out value="${student.id}" /></td>
 					<td><c:out value="${student.email}" /></td>
 					<td><c:out value="${student.firstName}" /></td>
 					<td><c:out value="${student.lastName}" /></td>
-					<td><c:choose>
-							<c:when test="${del eq student.id}">
-								<form:form method="post" modelAttribute="student">
-											<%@ include file="../jspf/delete.jspf"%>
-								</form:form>
-							</c:when>
-							<c:otherwise>
-								<div class="btn-group">
-									<button type="button" class="btn btn-primary dropdown-toggle"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">Option</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item"
-											href="${pageContext.request.contextPath}/student/${student.id}/edit">Edit</a>
-										<a class="dropdown-item"
-											href="${pageContext.request.contextPath}/student/${student.id}/delete">Delete</a>
-										<a class="dropdown-item"
-											href="${pageContext.request.contextPath}/student/${student.id}/details">Details</a>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose></td>
 				</tr>
 			</c:forEach>
 		</tbody>
+		
+			<form:form method="post" modelAttribute="addToDivision">
+			 	<form:select type="text" path="id">
+		  		<form:options items="${allAvailableStudents}" itemValue="id" itemLabel="firstName" />
+		  		</form:select>
+		  		<input type="submit" value="add">
+			</form:form>
+		
 	</table>
 	</div>
 

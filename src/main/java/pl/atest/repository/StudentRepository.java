@@ -11,8 +11,15 @@ import pl.atest.entity.Student;
 public interface StudentRepository extends JpaRepository<Student, Long>{
 	
 	Student findById(Long id);
+		
+	@Query("SELECT s FROM Student s WHERE s.division = null")
+	List<Student>sqlFindAllWithoutDivision();
 	
-	@Query("SELECT s FROM Student s WHERE s.teacher = null")
-	List<Student>sqlFindByHasTeacher();
+//	@Query("SELECT s FROM Student s WHERE s.division_id = ?1")
+//	List<Student>sqlFindAllInGroup(Long id);
 	
+	
+	
+	@Query(value = "SELECT * FROM student WHERE division_id = ?1", nativeQuery = true)
+	List<Student>sqlFindAllInGroup(Long id);
 }

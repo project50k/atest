@@ -13,30 +13,28 @@
 <body>
 
 	<%@ include file="../jspf/header.jspf"%>
-
 	<%@ include file="../jspf/main_menu.jspf"%>
-	
-	<h4>List of all teachers</h4>
+
+	<div >
+	<h4>List of all students</h4>
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th scope="col">ID</th>
-				<th scope="col">EMAIL</th>
-				<th scope="col">FIRST NAME</th>
-				<th scope="col">LAST NAME</th>
+				<th scope="col">NAME</th>
+				<th scope="col">DESCRIPTION</th>
 				<th scope="col">OPTION</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${allTeachers}" var="teacher">
+			<c:forEach items="${allSubjects}" var="subject">
 				<tr>
-					<td scope="row"><c:out value="${teacher.id}" /></td>
-					<td><c:out value="${teacher.email}" /></td>
-					<td><c:out value="${teacher.firstName}" /></td>
-					<td><c:out value="${teacher.lastName}" /></td>
+					<td scope="row"><c:out value="${subject.id}" /></td>
+					<td><c:out value="${subject.name}" /></td>
+					<td><c:out value="${subject.description}" /></td>
 					<td><c:choose>
-							<c:when test="${del eq teacher.id}">
-								<form:form method="post" modelAttribute="teacher">
+							<c:when test="${del eq subject.id}">
+								<form:form method="post" modelAttribute="subject">
 									<%@ include file="../jspf/delete.jspf"%>
 								</form:form>
 							</c:when>
@@ -47,11 +45,11 @@
 										aria-expanded="false">Option</button>
 									<div class="dropdown-menu">
 										<a class="dropdown-item"
-											href="${pageContext.request.contextPath}/teacher/${teacher.id}/edit">Edit</a>
+											href="${pageContext.request.contextPath}/subject/${subject.id}/edit">Edit</a>
 										<a class="dropdown-item"
-											href="${pageContext.request.contextPath}/teacher/${teacher.id}/delete">Delete</a>
+											href="${pageContext.request.contextPath}/subject/${subject.id}/delete">Delete</a>
 										<a class="dropdown-item"
-											href="${pageContext.request.contextPath}/teacher/${teacher.id}/details">Details</a>
+											href="${pageContext.request.contextPath}/subject/${subject.id}/details">Details</a>
 									</div>
 								</div>
 							</c:otherwise>
@@ -60,6 +58,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	</div>
 
 
 	<%@ include file="../jspf/footer.jspf"%>

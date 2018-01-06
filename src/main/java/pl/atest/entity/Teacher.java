@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -36,9 +35,7 @@ public class Teacher {
 	private String lastName;
 	
 	
-	@OneToOne (fetch = FetchType.EAGER)
-	@JoinColumn(name = "student_id")
-	private Student student;
+
 	@OneToOne (mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
 	
@@ -100,18 +97,11 @@ public class Teacher {
 		this.lastName = lastName;
 	}
 
-	public Student getStudent() {
-		return student;
-	}
-
-	public void setStudent(Student student) {
-		this.student = student;
-	}
 
 	@Override
 	public String toString() {
 		return "Teacher [id=" + id + ", password=" + password + ", email=" + email + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", student=" + student + "]";
+				+ ", lastName=" + lastName + ", student=" + "]";
 	}
 
 	

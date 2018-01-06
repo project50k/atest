@@ -88,8 +88,7 @@ public class StudentController {
 		this.studentRepo.save(student);	//save in DB
 		this.userRepo.save(u);			//save in DB
 		return "redirect:/student/add";
-	}
-	
+}
 	
 	@GetMapping("/{id}/edit")
 	public String editGet(@PathVariable long id, Model m) {
